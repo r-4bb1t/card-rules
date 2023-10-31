@@ -5,19 +5,13 @@ import Argument from "./argument";
 import { ArgDefaultType, BLOCK_TYPE } from "@/app/types/blocks";
 import { useBlockStore } from "@/app/store";
 
-export default function Block({
-  blockId,
-  isRule,
-}: {
-  blockId: string;
-  isRule: boolean;
-}) {
+export default function Block({ blockId }: { blockId: string }) {
   const { blocks } = useBlockStore();
   const block = blocks.find((block) => block.id === blockId)!;
   const [{ opacity }, dragRef] = useDrag(
     () => ({
       type: block.type,
-      item: { ...block, rule: isRule },
+      item: block,
       collect: (monitor) => ({
         opacity: 1,
       }),

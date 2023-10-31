@@ -17,7 +17,7 @@ export default function Sidebar() {
           {blocks
             .filter((block) => block.ruleId === "")
             .map((block) => (
-              <Block key={block.id} blockId={block.id} isRule={false} />
+              <Block key={block.id} blockId={block.id} />
             ))}
         </div>
         <div className="w-96 h-full bg-white border-l p-4">

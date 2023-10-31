@@ -2,21 +2,34 @@ import { create } from "zustand";
 import { RuleType } from "./types/rules";
 import { ArgDefaultType, BlockType } from "./types/blocks";
 import { DEFAULT_BLOCKS } from "./sidebar/constants";
+import { createRandomId } from "./libs/create-random-id";
 
 interface RuleStoreType {
   rules: RuleType[];
-  addRule: (rule: RuleType) => void;
+  addRule: (defaultBlockId: string) => void;
 }
 
 export const useRuleStore = create<RuleStoreType>()((set) => ({
   rules: [],
-  addRule: (rule: RuleType) =>
-    set((state) => ({ rules: [...state.rules, rule] })),
+  addRule: (defaultBlockId: string) => {
+    set((state) => ({
+      rules: [
+        ...state.rules,
+        {
+          id: createRandomId(),
+          name: "새 규칙",
+          description: "새 규칙입니다.",
+          children: [defaultBlockId],
+        },
+      ],
+    }));
+  },
 }));
 
 interface BlockStoreType {
   blocks: BlockType[];
   changeArg: (blockId: string, newArg: { key: string; value: string }) => void;
+  copyBlock: (block: BlockType, ruleId: string) => string;
 }
 
 export const useBlockStore = create<BlockStoreType>()((set) => ({
@@ -42,6 +55,20 @@ export const useBlockStore = create<BlockStoreType>()((set) => ({
         } else return block;
       }),
     }));
+  },
+  copyBlock: (block: BlockType, ruleId: string) => {
+    const newId = createRandomId();
+    set((state) => ({
+      blocks: [
+        ...state.blocks,
+        {
+          ...block,
+          id: newId,
+          ruleId,
+        },
+      ],
+    }));
+    return newId;
   },
   /* addInner: (ruleId: string, innerRuleId: string) => {
     set((state) => ({

@@ -14,7 +14,7 @@ export default function Rule({ rule }: { rule: RuleType }) {
       <div className="text-xs text-gray-400">{rule.id}</div>
       <hr className="my-2" />
       {rule.children.map((blockId) => (
-        <Block key={blockId} blockId={blockId} isRule={true} />
+        <Block key={blockId} blockId={blockId} />
       ))}
     </div>
   );
