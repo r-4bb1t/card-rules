@@ -1,6 +1,7 @@
 import { createRandomId } from "@/app/libs/create-random-id";
 import {
   ARG_INPUT_TYPE,
+  ArgDefaultType,
   BLOCK_CATEGORY,
   BLOCK_TYPE,
   BlockDefaultType,
@@ -15,6 +16,43 @@ export class IfBlockType extends BlockDefaultType {
   args: IfArgsType = new IfArgsType();
   acceptInnerCategory = [BLOCK_CATEGORY.ACTION, BLOCK_CATEGORY.CONDITION];
   inner: string[] = [];
+
+  getValue: Function = (value: ArgDefaultType["value"]) => {
+    if (value.type === ARG_INPUT_TYPE.NUMBER) {
+      return Number(value.value);
+    } else if (value.type === ARG_INPUT_TYPE.VARIABLE) {
+      //return variable value
+    }
+  };
+  action: Function = () => {
+    switch (this.args.operator.value.value) {
+      case "==":
+        return (
+          this.getValue(this.args.A.value) === this.getValue(this.args.B.value)
+        );
+      case "!=":
+        return (
+          this.getValue(this.args.A.value) !== this.getValue(this.args.B.value)
+        );
+      case ">":
+        return (
+          this.getValue(this.args.A.value) > this.getValue(this.args.B.value)
+        );
+      case "<":
+        return (
+          this.getValue(this.args.A.value) < this.getValue(this.args.B.value)
+        );
+      case ">=":
+        return (
+          this.getValue(this.args.A.value) >= this.getValue(this.args.B.value)
+        );
+      case "<=":
+        return (
+          this.getValue(this.args.A.value) <= this.getValue(this.args.B.value)
+        );
+    }
+  };
+  act: Function = () => this.action();
 }
 
 export class IfArgsType {

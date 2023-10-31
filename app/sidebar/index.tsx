@@ -3,9 +3,10 @@
 import { useState } from "react";
 import RuleSet from "./rule-set";
 import cc from "classcat";
+import Deck from "./deck";
 
 export default function Sidebar() {
-  const Tab = ["rule", "card"];
+  const Tab = ["rule", "deck"];
   const [tab, setTab] = useState("rule");
   return (
     <aside className="relative h-screen shrink-0 flex flex-col items-center overflow-auto w-[640px]">
@@ -23,6 +24,7 @@ export default function Sidebar() {
         <div className="tab tab-lifted w-full" />
       </div>
       {tab === "rule" && <RuleSet />}
+      {tab === "deck" && <Deck />}
     </aside>
   );
 }

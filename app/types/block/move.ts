@@ -15,6 +15,11 @@ export class MoveBlockType extends BlockDefaultType {
   acceptInnerCategory = [] as BLOCK_CATEGORY[];
   args: MoveArgsType = new MoveArgsType();
   inner: string[] = [];
+  action: Function = () => {
+    alert("이동");
+    return false;
+  };
+  act: Function = () => this.action();
 }
 
 export class MoveArgsType {
