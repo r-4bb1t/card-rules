@@ -59,9 +59,7 @@ export default function Block({ blockId }: { blockId: string }) {
       style={{ opacity }}
       className="w-full p-2 bg-white rounded hover:bg-gray-50 border"
     >
-      <div className="font-bold">
-        {block.name} <small>{block.id}</small>
-      </div>
+      <div className="font-bold">{block.name}</div>
       <div className="text-xs">{block.description}</div>
       <div
         className={cc([
