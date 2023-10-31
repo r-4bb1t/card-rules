@@ -1,22 +1,29 @@
 import { useDrag } from "react-dnd";
-import { BLOCKS } from "../constants";
+import { DEFAULT_BLOCKS } from "../constants";
 import cc from "classcat";
 import Argument from "./argument";
-import { BLOCK_TYPE } from "../types";
+import { ArgDefaultType, BLOCK_TYPE } from "@/app/types/blocks";
+import { useBlockStore } from "@/app/store";
 
-export default function Block({ type }: { type: keyof typeof BLOCKS }) {
+export default function Block({
+  blockId,
+  isRule,
+}: {
+  blockId: string;
+  isRule: boolean;
+}) {
+  const { blocks } = useBlockStore();
+  const block = blocks.find((block) => block.id === blockId)!;
   const [{ opacity }, dragRef] = useDrag(
     () => ({
-      type: BLOCKS[type].id,
-      item: "",
+      type: block.type,
+      item: { ...block, rule: isRule },
       collect: (monitor) => ({
         opacity: 1,
       }),
     }),
     []
   );
-
-  const block = BLOCKS[type];
 
   return (
     <div
@@ -29,14 +36,21 @@ export default function Block({ type }: { type: keyof typeof BLOCKS }) {
       <div
         className={cc([
           "flex gap-2 items-center",
-          block.args.length > 0 && "mt-2",
+          Object.keys(block.args).length > 0 && "mt-2",
         ])}
       >
-        {block.args.map((arg) => (
-          <Argument key={arg.id} arg={arg} />
+        {Object.keys(block.args).map((key) => (
+          <Argument
+            key={
+              (block.args[key as keyof typeof block.args] as ArgDefaultType).id
+            }
+            ruleId={""}
+            argKey={key}
+            arg={block.args[key as keyof typeof block.args]}
+          />
         ))}
       </div>
-      {block.canHaveChildren && (
+      {block.canHaveInner && (
         <div className="w-full h-12 bg-gray-200 rounded mt-4"></div>
       )}
     </div>
