@@ -2,7 +2,7 @@ import { useDrop } from "react-dnd";
 import { DEFAULT_BLOCKS } from "./constants";
 import { useBlockStore, useRuleStore } from "../store";
 import { BlockType } from "../types/block";
-import Rule from "./blocks/rule";
+import Rule from "./rule";
 import { createRandomId } from "../libs/create-random-id";
 
 export default function RuleList() {
