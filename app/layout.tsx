@@ -14,8 +14,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="flex">
-        <div className="">{children}</div>
+      <body className="flex w-full">
+        <div className="w-full">{children}</div>
         <Sidebar />
       </body>
     </html>

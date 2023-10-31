@@ -11,7 +11,7 @@ import { useBlockStore, useRuleStore } from "@/app/store";
 
 export default function Block({ blockId }: { blockId: string }) {
   const { blocks, addInner, copyBlock } = useBlockStore();
-  const { addBlock } = useRuleStore();
+  const { moveBlockTo: addBlock } = useRuleStore();
 
   const block = blocks.find((block) => block.id === blockId)!;
   const [{ opacity }, dragRef] = useDrag(
@@ -26,12 +26,20 @@ export default function Block({ blockId }: { blockId: string }) {
   );
 
   const [{ isOver }, drop] = useDrop(() => ({
-    accept: Object.keys(CATEGORY_TYPE)
-      .filter((key) =>
-        block.acceptInnerCategory.includes(key as keyof typeof CATEGORY_TYPE)
-      )
-      .map((category) => CATEGORY_TYPE[category as keyof typeof CATEGORY_TYPE])
-      .flat(),
+    accept:
+      block.ruleId === ""
+        ? []
+        : Object.keys(CATEGORY_TYPE)
+            .filter((key) =>
+              block.acceptInnerCategory.includes(
+                key as keyof typeof CATEGORY_TYPE
+              )
+            )
+            .map(
+              (category) =>
+                CATEGORY_TYPE[category as keyof typeof CATEGORY_TYPE]
+            )
+            .flat(),
     drop: (droppedBlock: BlockType) => {
       if (droppedBlock.ruleId == "") {
         addInner(block.id, copyBlock(droppedBlock, block.ruleId));
@@ -49,11 +57,12 @@ export default function Block({ blockId }: { blockId: string }) {
     <div
       ref={dragRef}
       style={{ opacity }}
-      className="w-full p-4 bg-white rounded hover:bg-gray-50"
+      className="w-full p-2 bg-white rounded hover:bg-gray-50 border"
     >
-      <div className="font-bold">{block.name}</div>
+      <div className="font-bold">
+        {block.name} <small>{block.id}</small>
+      </div>
       <div className="text-xs">{block.description}</div>
-      <div className="text-xs">{block.ruleId}</div>
       <div
         className={cc([
           "flex gap-2 items-center",

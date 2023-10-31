@@ -1,13 +1,13 @@
 import { create } from "zustand";
 import { RuleType } from "./types/rule";
 import { ArgDefaultType, BlockType } from "./types/block";
-import { DEFAULT_BLOCKS } from "./sidebar/constants";
+import { DEFAULT_BLOCKS } from "./sidebar/rule-set/constants";
 import { createRandomId } from "./libs/create-random-id";
 
 interface RuleStoreType {
   rules: RuleType[];
   addRule: (defaultBlockId: string, ruleId: string) => void;
-  addBlock: (ruleId: string, blockId: string) => void;
+  moveBlockTo: (ruleId: string, blockId: string) => void;
 }
 
 export const useRuleStore = create<RuleStoreType>()((set) => ({
@@ -25,7 +25,7 @@ export const useRuleStore = create<RuleStoreType>()((set) => ({
       ],
     }));
   },
-  addBlock: (ruleId: string, blockId: string) => {
+  moveBlockTo: (ruleId: string, blockId: string) => {
     set((state) => ({
       rules: state.rules.map((rule) => {
         if (rule.id === ruleId) {
@@ -98,16 +98,16 @@ export const useBlockStore = create<BlockStoreType>()((set) => ({
             ruleId: state.blocks.find((b) => b.id === blockId)?.ruleId || "",
           };
         }
+        if (block.inner.includes(innerBlockId)) {
+          return {
+            ...block,
+            inner: block.inner.filter((id) => id !== innerBlockId),
+          };
+        }
         if (block.id === blockId) {
           return {
             ...block,
             inner: [...block.inner, innerBlockId],
-          };
-        }
-        if (block.inner.includes(blockId)) {
-          return {
-            ...block,
-            inner: block.inner.filter((id) => id !== blockId),
           };
         }
         return block;

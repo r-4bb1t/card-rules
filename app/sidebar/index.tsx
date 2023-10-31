@@ -1,29 +1,28 @@
 "use client";
 
-import { HTML5Backend } from "react-dnd-html5-backend";
-import { DndProvider } from "react-dnd";
-import Block from "./blocks/block";
-import { DEFAULT_BLOCKS } from "./constants";
-import RuleList from "./rule-list";
-import { BLOCK_TYPE } from "../types/block";
-import { useBlockStore } from "../store";
+import { useState } from "react";
+import RuleSet from "./rule-set";
+import cc from "classcat";
 
 export default function Sidebar() {
-  const { blocks } = useBlockStore();
+  const Tab = ["rule", "card"];
+  const [tab, setTab] = useState("rule");
   return (
-    <DndProvider backend={HTML5Backend}>
-      <aside className="h-screen shrink-0 flex">
-        <div className="w-64 flex flex-col p-4 gap-2 bg-gray-300">
-          {blocks
-            .filter((block) => block.ruleId === "")
-            .map((block) => (
-              <Block key={block.id} blockId={block.id} />
-            ))}
-        </div>
-        <div className="w-96 h-full bg-white border-l p-4">
-          <RuleList />
-        </div>
-      </aside>
-    </DndProvider>
+    <aside className="relative h-screen shrink-0 flex flex-col items-center overflow-auto">
+      <div className="tabs pt-2 flex-nowrap w-full bg-gray-100 sticky top-0 z-10">
+        <div className="tab tab-lifted w-full" />
+        {Tab.map((tabName) => (
+          <div
+            key={tabName}
+            className={cc(["tab tab-lifted", tab === tabName && "tab-active"])}
+            onClick={() => setTab(tabName)}
+          >
+            {tabName}
+          </div>
+        ))}
+        <div className="tab tab-lifted w-full" />
+      </div>
+      {tab === "rule" && <RuleSet />}
+    </aside>
   );
 }
