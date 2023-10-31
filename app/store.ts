@@ -7,6 +7,7 @@ import { createRandomId } from "./libs/create-random-id";
 interface RuleStoreType {
   rules: RuleType[];
   addRule: (defaultBlockId: string) => void;
+  moveBlock: (ruleId: string, blockId: string) => void;
 }
 
 export const useRuleStore = create<RuleStoreType>()((set) => ({
@@ -22,6 +23,23 @@ export const useRuleStore = create<RuleStoreType>()((set) => ({
           children: [defaultBlockId],
         },
       ],
+    }));
+  },
+  moveBlock: (ruleId: string, blockId: string) => {
+    set((state) => ({
+      rules: state.rules.map((rule) => {
+        if (rule.id === ruleId) {
+          return {
+            ...rule,
+            children: [...rule.children, blockId],
+          };
+        } else if (rule.children.includes(blockId)) {
+          return {
+            ...rule,
+            children: rule.children.filter((id) => id !== blockId),
+          };
+        } else return rule;
+      }),
     }));
   },
 }));

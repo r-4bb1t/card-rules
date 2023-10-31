@@ -4,7 +4,6 @@ import {
   BLOCK_CATEGORY,
   BLOCK_TYPE,
   BlockDefaultType,
-  BlockType,
 } from ".";
 
 export class IfBlockType extends BlockDefaultType {

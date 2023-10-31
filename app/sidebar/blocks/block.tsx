@@ -38,7 +38,7 @@ export default function Block({ blockId }: { blockId: string }) {
             key={
               (block.args[key as keyof typeof block.args] as ArgDefaultType).id
             }
-            ruleId={""}
+            ruleId={block.ruleId}
             argKey={key}
             arg={block.args[key as keyof typeof block.args]}
           />
