@@ -2,8 +2,8 @@ import { useDrag, useDrop } from "react-dnd";
 import { DEFAULT_BLOCKS } from "../constants";
 import cc from "classcat";
 import Argument from "./argument";
-import { RuleType } from "@/app/types/rules";
-import { ArgDefaultType, BlockType } from "@/app/types/blocks";
+import { RuleType } from "@/app/types/rule";
+import { ArgDefaultType, BlockType } from "@/app/types/block";
 import { useRuleStore } from "@/app/store";
 import Block from "./block";
 

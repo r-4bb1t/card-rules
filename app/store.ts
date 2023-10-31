@@ -1,6 +1,6 @@
 import { create } from "zustand";
-import { RuleType } from "./types/rules";
-import { ArgDefaultType, BlockType } from "./types/blocks";
+import { RuleType } from "./types/rule";
+import { ArgDefaultType, BlockType } from "./types/block";
 import { DEFAULT_BLOCKS } from "./sidebar/constants";
 import { createRandomId } from "./libs/create-random-id";
 

@@ -5,7 +5,7 @@ import { DndProvider } from "react-dnd";
 import Block from "./blocks/block";
 import { DEFAULT_BLOCKS } from "./constants";
 import RuleList from "./rule-list";
-import { BLOCK_TYPE } from "../types/blocks";
+import { BLOCK_TYPE } from "../types/block";
 import { useBlockStore } from "../store";
 
 export default function Sidebar() {

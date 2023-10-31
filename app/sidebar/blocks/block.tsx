@@ -2,7 +2,7 @@ import { useDrag } from "react-dnd";
 import { DEFAULT_BLOCKS } from "../constants";
 import cc from "classcat";
 import Argument from "./argument";
-import { ArgDefaultType, BLOCK_TYPE } from "@/app/types/blocks";
+import { ArgDefaultType, BLOCK_TYPE } from "@/app/types/block";
 import { useBlockStore } from "@/app/store";
 
 export default function Block({ blockId }: { blockId: string }) {
