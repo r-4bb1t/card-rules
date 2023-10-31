@@ -1,4 +1,4 @@
-import { useBlockStore } from "@/app/store";
+import { useBlockStore, useRuleStore } from "@/app/store";
 import Block from "./block";
 
 export default function BlockList() {

@@ -1,7 +1,7 @@
 import { useDrop } from "react-dnd";
-import { useBlockStore, useRuleStore } from "../../store";
-import { BLOCK_TYPE, BlockType } from "../../types/block";
-import { createRandomId } from "../../libs/create-random-id";
+import { useBlockStore, useRuleStore } from "@/app/store";
+import { BLOCK_TYPE, BlockType } from "@/app/types/block";
+import { createRandomId } from "@/app/libs/create-random-id";
 import classcat from "classcat";
 import Rule from "./rule";
 

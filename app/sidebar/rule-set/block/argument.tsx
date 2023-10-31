@@ -1,4 +1,4 @@
-import { useBlockStore, useRuleStore } from "@/app/store";
+import { useBlockStore } from "@/app/store";
 import { ARG_INPUT_TYPE, ArgDefaultType } from "../../../types/block";
 import { ChangeEvent } from "react";
 import cc from "classcat";
