@@ -43,7 +43,7 @@ export default function Rule({ rule }: { rule: RuleType }) {
         </div>
       </div>
       <hr />
-      <div className="p-2">
+      <div className="p-2 flex flex-col gap-2">
         {rule.children.map((blockId) => (
           <Block key={blockId} blockId={blockId} />
         ))}

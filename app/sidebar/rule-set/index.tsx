@@ -8,11 +8,9 @@ import BlockList from "./block-list";
 export default function RuleSet() {
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className="flex h-full">
+      <div className="flex w-full h-full">
         <BlockList />
-        <div className="w-96 h-full bg-white p-4">
-          <RuleList />
-        </div>
+        <RuleList />
       </div>
     </DndProvider>
   );

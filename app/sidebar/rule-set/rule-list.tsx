@@ -30,16 +30,19 @@ export default function RuleList() {
     }),
   }));
   return (
-    <div
-      className={classcat([
-        "w-full h-full p-2 gap-2 flex flex-col",
-        isOver ? "bg-primary" : "bg-gray-100",
-      ])}
-      ref={drop}
-    >
-      {rules.map((rule) => (
-        <Rule key={rule.id} rule={rule} />
-      ))}
+    <div className="w-full h-full bg-white p-4 flex flex-col">
+      <div className="sticky top-0 font-bold">Rules</div>
+      <div
+        className={classcat([
+          "w-full h-full p-2 gap-2 flex flex-col overflow-auto",
+          isOver ? "bg-primary" : "bg-gray-100",
+        ])}
+        ref={drop}
+      >
+        {rules.map((rule) => (
+          <Rule key={rule.id} rule={rule} />
+        ))}
+      </div>
     </div>
   );
 }
