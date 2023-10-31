@@ -22,6 +22,11 @@ export enum BLOCK_CATEGORY {
   VARIABLE = "variable",
 }
 
+export const CATEGORY_TYPE = {
+  [BLOCK_CATEGORY.CONDITION]: [BLOCK_TYPE.IF],
+  [BLOCK_CATEGORY.ACTION]: [BLOCK_TYPE.MOVE],
+};
+
 export type ArgsType = IfArgsType | MoveArgsType;
 
 export interface ArgDefaultType {

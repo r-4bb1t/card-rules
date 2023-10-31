@@ -12,9 +12,9 @@ export class IfBlockType extends BlockDefaultType {
   name = "만약";
   icon = "";
   description = "만약 조건이 참이면 실행합니다.";
-  canHaveInner = true;
   args: IfArgsType = new IfArgsType();
   acceptInnerCategory = [BLOCK_CATEGORY.ACTION, BLOCK_CATEGORY.CONDITION];
+  inner: string[] = [];
 }
 
 export class IfArgsType {

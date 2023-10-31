@@ -4,7 +4,6 @@ import {
   BLOCK_CATEGORY,
   BLOCK_TYPE,
   BlockDefaultType,
-  BlockType,
 } from ".";
 
 export class MoveBlockType extends BlockDefaultType {
@@ -13,8 +12,9 @@ export class MoveBlockType extends BlockDefaultType {
   name = "이동";
   icon = "";
   description = "플레이어를 이동시킵니다.";
-  canHaveInner = false;
+  acceptInnerCategory = [] as BLOCK_CATEGORY[];
   args: MoveArgsType = new MoveArgsType();
+  inner: string[] = [];
 }
 
 export class MoveArgsType {

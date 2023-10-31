@@ -20,7 +20,8 @@ export default function RuleList() {
         return;
       }
       if (block.ruleId == "") {
-        addRule(copyBlock(block, createRandomId()));
+        const ruleId = createRandomId();
+        addRule(copyBlock(block, ruleId), ruleId);
       } else {
         // TODO: rule reordering
       }

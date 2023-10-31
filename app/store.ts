@@ -6,18 +6,18 @@ import { createRandomId } from "./libs/create-random-id";
 
 interface RuleStoreType {
   rules: RuleType[];
-  addRule: (defaultBlockId: string) => void;
-  moveBlock: (ruleId: string, blockId: string) => void;
+  addRule: (defaultBlockId: string, ruleId: string) => void;
+  addBlock: (ruleId: string, blockId: string) => void;
 }
 
 export const useRuleStore = create<RuleStoreType>()((set) => ({
   rules: [],
-  addRule: (defaultBlockId: string) => {
+  addRule: (defaultBlockId: string, ruleId: string) => {
     set((state) => ({
       rules: [
         ...state.rules,
         {
-          id: createRandomId(),
+          id: ruleId,
           name: "새 규칙",
           description: "새 규칙입니다.",
           children: [defaultBlockId],
@@ -25,7 +25,7 @@ export const useRuleStore = create<RuleStoreType>()((set) => ({
       ],
     }));
   },
-  moveBlock: (ruleId: string, blockId: string) => {
+  addBlock: (ruleId: string, blockId: string) => {
     set((state) => ({
       rules: state.rules.map((rule) => {
         if (rule.id === ruleId) {
@@ -48,6 +48,7 @@ interface BlockStoreType {
   blocks: BlockType[];
   changeArg: (blockId: string, newArg: { key: string; value: string }) => void;
   copyBlock: (block: BlockType, ruleId: string) => string;
+  addInner: (blockId: string, innerBlockId: string) => void;
 }
 
 export const useBlockStore = create<BlockStoreType>()((set) => ({
@@ -61,11 +62,9 @@ export const useBlockStore = create<BlockStoreType>()((set) => ({
             args: {
               ...block.args,
               [newArg.key]: {
-                id: (
-                  block.args[
-                    newArg.key as keyof typeof block.args
-                  ] as ArgDefaultType
-                ).id,
+                ...(block.args[
+                  newArg.key as keyof typeof block.args
+                ] as ArgDefaultType),
                 value: newArg.value,
               },
             },
@@ -88,16 +87,31 @@ export const useBlockStore = create<BlockStoreType>()((set) => ({
     }));
     return newId;
   },
-  /* addInner: (ruleId: string, innerRuleId: string) => {
+  addInner: (blockId: string, innerBlockId: string) => {
+    if (blockId === innerBlockId) return;
     set((state) => ({
-      rules: state.rules.map((rule) => {
-        if (rule.id === ruleId) {
+      ...state,
+      blocks: state.blocks.map((block) => {
+        if (block.id === innerBlockId) {
           return {
-            ...rule,
-            inner: [...rule.children, innerRuleId],
+            ...block,
+            ruleId: state.blocks.find((b) => b.id === blockId)?.ruleId || "",
           };
-        } else return rule;
+        }
+        if (block.id === blockId) {
+          return {
+            ...block,
+            inner: [...block.inner, innerBlockId],
+          };
+        }
+        if (block.inner.includes(blockId)) {
+          return {
+            ...block,
+            inner: block.inner.filter((id) => id !== blockId),
+          };
+        }
+        return block;
       }),
     }));
-  }, */
+  },
 }));

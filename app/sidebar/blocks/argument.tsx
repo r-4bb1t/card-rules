@@ -5,10 +5,12 @@ import cc from "classcat";
 
 export default function Argument({
   ruleId,
+  blockId,
   argKey,
   arg,
 }: {
   ruleId: string;
+  blockId: string;
   argKey: string;
   arg: ArgDefaultType;
 }) {
@@ -17,7 +19,7 @@ export default function Argument({
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
-    changeArg(ruleId, { key: argKey, value: e.target.value });
+    changeArg(blockId, { key: argKey, value: e.target.value });
   };
 
   return arg.acceptType.includes(ARG_INPUT_TYPE.SELECT) ? (
@@ -25,6 +27,7 @@ export default function Argument({
       className="select select-primary select-sm"
       onChange={handleChange}
       disabled={ruleId.length == 0}
+      value={arg.value.value}
     >
       {arg.options!.map((option) => (
         <option key={option} value={option}>
@@ -39,6 +42,7 @@ export default function Argument({
         "input input-primary input-sm",
         ruleId.length == 0 ? "w-8" : "w-16",
       ])}
+      value={arg.value.value}
       onChange={handleChange}
       disabled={ruleId.length == 0}
     />

@@ -6,7 +6,7 @@ import { useBlockStore, useRuleStore } from "../store";
 import classcat from "classcat";
 
 export default function Rule({ rule }: { rule: RuleType }) {
-  const { moveBlock } = useRuleStore();
+  const { addBlock: moveBlock } = useRuleStore();
   const { copyBlock } = useBlockStore();
 
   const [{ isOver }, drop] = useDrop(() => ({
