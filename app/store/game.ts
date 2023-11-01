@@ -65,8 +65,13 @@ export const useGameStore = create<GameStoreType>()((set) => ({
         ...state.game,
         deck,
         floor: deck.map((card) => card.id),
+        submit: [],
+        players: state.game.players.map((player) => ({
+          ...player,
+          cards: [],
+        })),
       },
-      deckImage: deckImage,
+      deckImage,
     }));
   },
   addTurn: () => {

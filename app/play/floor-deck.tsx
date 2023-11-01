@@ -23,11 +23,8 @@ export default function FloorDeck() {
             className="relative border border-gray-400 w-24 h-32 rounded-xl bg-white flex items-center justify-center overflow-hidden"
             key={i}
           >
-            <img
-              className="absolute w-full h-full object-cover"
-              src={deckImage}
-            />
-            <div className="bg-white rounded-full px-2 py-1">
+            <img className="w-full h-full object-cover" src={deckImage} />
+            <div className="absolute bg-white rounded-full px-2 py-0.5 border border-gray-400">
               {game.floor.length}장
             </div>
           </div>
