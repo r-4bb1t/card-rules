@@ -1,10 +1,22 @@
 import { useGameStore } from "../store";
+import Card from "./cards/card";
 
 export default function FloorDeck() {
   const { game, deckImage } = useGameStore();
 
   return (
-    <div className="w-full flex justify-center">
+    <div className="w-full flex justify-center gap-4">
+      <div className="stack">
+        {game.submit.map((cardId, i) => (
+          <Card
+            key={i}
+            card={game.deck.find((card) => card.id === cardId)!}
+            size="sm"
+            rotate={0}
+            submitted
+          />
+        ))}
+      </div>
       <div className="stack">
         {game.floor.map((_, i) => (
           <div

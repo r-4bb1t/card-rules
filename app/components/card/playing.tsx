@@ -36,7 +36,7 @@ export const PlayingCardPreview = ({ card }: { card: PlayingCardType }) => {
           <div
             className={cc([
               getClassName(card.values.suit),
-              "-mt-1 text-[0.8em]",
+              "-mt-[0.7em] text-[0.6em]",
             ])}
           >
             {getSimbol(card.values.suit)}
@@ -56,7 +56,7 @@ export const PlayingCardPreview = ({ card }: { card: PlayingCardType }) => {
           <div
             className={cc([
               getClassName(card.values.suit),
-              "-mb-1 text-[0.8em]",
+              "-mb-[0.7em] text-[0.6em]",
             ])}
           >
             {getSimbol(card.values.suit)}

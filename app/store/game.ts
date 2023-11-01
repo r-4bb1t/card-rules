@@ -12,6 +12,7 @@ interface GameStoreType {
   draw: (playerIds: string[], count: number) => void;
   setDeck: (deck: CardType[], deckImage: string) => void;
   addTurn: () => void;
+  submitCard: (playerId: string, cardId: string) => void;
 }
 
 export const useGameStore = create<GameStoreType>()((set) => ({
@@ -74,6 +75,23 @@ export const useGameStore = create<GameStoreType>()((set) => ({
       game: {
         ...state.game,
         turn: state.game.turn + 1,
+      },
+    }));
+  },
+  submitCard: (playerId: string, cardId: string) => {
+    set((state) => ({
+      ...state,
+      game: {
+        ...state.game,
+        players: state.game.players.map((player) => {
+          if (player.id === playerId) {
+            return {
+              ...player,
+              cards: player.cards.filter((card) => card !== cardId),
+            };
+          } else return player;
+        }),
+        submit: [cardId, ...state.game.submit],
       },
     }));
   },

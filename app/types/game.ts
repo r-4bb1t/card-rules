@@ -10,6 +10,7 @@ export class GameType {
   players: PlayerType[] = [new PlayerType()];
   deck: CardType[] = PlayingCardDeck.cards;
   floor: string[] = PlayingCardDeck.cards.map((card) => card.id);
+  submit: string[] = [];
 }
 
 export class PlayerType {
