@@ -1,18 +1,30 @@
-import { ArgDefaultType, BlockType } from "../types/block";
-import { DEFAULT_BLOCKS } from "../sidebar/rule-set/constants";
-import { createRandomId } from "../libs/create-random-id";
+import {
+  ARG_INPUT_TYPE,
+  ArgType,
+  ArgsType,
+  BlockDefaultType,
+  BlockType,
+} from "../types/block";
+import { DEFAULT_BLOCKS } from "@/app/constants/default-blocks";
+import { createRandomId } from "@/app/libs/create-random-id";
 import { create } from "zustand";
 
 interface BlockStoreType {
   blocks: BlockType[];
-  changeArg: (blockId: string, newArg: { key: string; value: string }) => void;
+  changeArg: (
+    blockId: string,
+    newArg: { key: string; type: ARG_INPUT_TYPE; value: string }
+  ) => void;
   copyBlock: (block: BlockType, ruleId: string) => string;
   addInner: (blockId: string, innerBlockId: string) => void;
 }
 
 export const useBlockStore = create<BlockStoreType>()((set) => ({
   blocks: DEFAULT_BLOCKS,
-  changeArg: (blockId: string, newArg: { key: string; value: string }) => {
+  changeArg: (
+    blockId: string,
+    newArg: { key: string; type: ARG_INPUT_TYPE; value: string }
+  ) => {
     set((state) => ({
       blocks: state.blocks.map((block) => {
         if (block.id === blockId) {
@@ -21,28 +33,29 @@ export const useBlockStore = create<BlockStoreType>()((set) => ({
             args: {
               ...block.args,
               [newArg.key]: {
-                ...(block.args[
-                  newArg.key as keyof typeof block.args
-                ] as ArgDefaultType),
-                value: newArg.value,
-              },
+                ...(block.args[newArg.key as keyof ArgsType] as ArgType),
+                value: {
+                  type: newArg.type,
+                  value: newArg.value,
+                },
+              } as ArgType,
             },
-          } as BlockType;
+          };
         } else return block;
       }),
     }));
   },
   copyBlock: (block: BlockType, ruleId: string) => {
     const newId = createRandomId();
+    const newBlock = {
+      ...block,
+      id: newId,
+      ruleId,
+      args: { ...block.args },
+    } as BlockType;
+    // newBlock.changeArg.bind(newBlock);
     set((state) => ({
-      blocks: [
-        ...state.blocks,
-        {
-          ...block,
-          id: newId,
-          ruleId,
-        },
-      ],
+      blocks: [...state.blocks, newBlock],
     }));
     return newId;
   },
@@ -70,7 +83,7 @@ export const useBlockStore = create<BlockStoreType>()((set) => ({
           };
         }
         return block;
-      }),
+      }) as BlockType[],
     }));
   },
 }));

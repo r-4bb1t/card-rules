@@ -1,8 +1,9 @@
 import { createRandomId } from "@/app/libs/create-random-id";
 import { IfArgsType, IfBlockType } from "./if";
-import { MoveArgsType, MoveBlockType } from "./move";
+import { DrawArgsType, DrawBlockType } from "./draw";
+import { GameStartBlockType } from "./game/start";
 
-export type BlockType = IfBlockType | MoveBlockType;
+export type BlockType = IfBlockType | DrawBlockType | GameStartBlockType;
 
 export enum ARG_INPUT_TYPE {
   TEXT = "text",
@@ -13,7 +14,8 @@ export enum ARG_INPUT_TYPE {
 
 export enum BLOCK_TYPE {
   IF = "if",
-  MOVE = "move",
+  GAMESTART = "gameStart",
+  DRAW = "draw",
 }
 
 export enum BLOCK_CATEGORY {
@@ -23,14 +25,16 @@ export enum BLOCK_CATEGORY {
 }
 
 export const CATEGORY_TYPE = {
-  [BLOCK_CATEGORY.CONDITION]: [BLOCK_TYPE.IF],
-  [BLOCK_CATEGORY.ACTION]: [BLOCK_TYPE.MOVE],
+  [BLOCK_CATEGORY.CONDITION]: [BLOCK_TYPE.IF, BLOCK_TYPE.GAMESTART],
+  [BLOCK_CATEGORY.ACTION]: [BLOCK_TYPE.DRAW],
+  [BLOCK_CATEGORY.VARIABLE]: [],
 };
 
-export type ArgsType = IfArgsType | MoveArgsType;
+export type ArgsType = IfArgsType | DrawArgsType | { [key: string]: ArgType };
 
-export interface ArgDefaultType {
+export interface ArgType {
   id: string;
+  label: string;
   value: {
     type: ARG_INPUT_TYPE;
     value: string;
@@ -39,7 +43,15 @@ export interface ArgDefaultType {
   options?: string[];
 }
 
-export class BlockDefaultType {
+export abstract class BlockDefaultType {
   id: string = createRandomId();
+  type!: string;
+  category!: BLOCK_CATEGORY;
+  name = "만약";
+  icon = "";
   ruleId: string = "";
+  args: ArgsType = {};
+  inner: string[] = [];
 }
+
+export type TargetType = "me" | "enemy" | "all";

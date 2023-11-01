@@ -1,19 +1,16 @@
 import { useDrag, useDrop } from "react-dnd";
 import cc from "classcat";
 import Argument from "./argument";
-import {
-  ArgDefaultType,
-  BLOCK_TYPE,
-  BlockType,
-  CATEGORY_TYPE,
-} from "@/app/types/block";
+import { ArgType, BlockType, CATEGORY_TYPE } from "@/app/types/block";
 import { useBlockStore, useRuleStore } from "@/app/store";
+import { useEffect, useState } from "react";
 
 export default function Block({ blockId }: { blockId: string }) {
   const { blocks, addInner, copyBlock } = useBlockStore();
   const { moveBlockTo: addBlock } = useRuleStore();
 
   const block = blocks.find((block) => block.id === blockId)!;
+
   const [{ opacity }, dragRef] = useDrag(
     () => ({
       type: block.type,
@@ -69,11 +66,9 @@ export default function Block({ blockId }: { blockId: string }) {
       >
         {Object.keys(block.args).map((key) => (
           <Argument
-            key={
-              (block.args[key as keyof typeof block.args] as ArgDefaultType).id
-            }
+            key={(block.args[key as keyof typeof block.args] as ArgType).id}
             ruleId={block.ruleId}
-            blockId={block.id}
+            blockId={blockId}
             argKey={key}
             arg={block.args[key as keyof typeof block.args]}
           />

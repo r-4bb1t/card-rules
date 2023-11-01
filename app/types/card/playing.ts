@@ -2,7 +2,7 @@ import { CardDefaultType, DECK_TYPE } from ".";
 
 export type PLAYING_CARD_SUIT = "diamond" | "heart" | "spade" | "club";
 export type PLAYING_CARD_NUMBER =
-  | "1"
+  | "A"
   | "2"
   | "3"
   | "4"

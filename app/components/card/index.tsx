@@ -4,9 +4,9 @@ import { PlayingCardPreview } from "./playing";
 import { FruitCardPreview } from "./fruit";
 import { FruitCardType } from "@/app/types/card/fruit";
 
-export default function Card({ card }: { card: CardDefaultType }) {
+export default function CardRender({ card }: { card: CardDefaultType }) {
   return (
-    <div className="w-12 h-20 bg-white rounded-sm border">
+    <div className="w-full h-full">
       {card.deck === DECK_TYPE.PLAYING && (
         <PlayingCardPreview card={card as PlayingCardType} />
       )}

@@ -1,5 +1,5 @@
-import { DeckList } from "@/app/constants/deck";
-import { useDeckStore } from "@/app/store/deck";
+import { DeckList } from "@/app/constants/default-deck";
+import { useDeckStore } from "@/app/store";
 import cc from "classcat";
 
 export default function SelectDeck() {
